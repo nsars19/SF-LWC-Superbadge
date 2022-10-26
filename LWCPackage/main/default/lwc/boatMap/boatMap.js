@@ -84,7 +84,7 @@ export default class BoatMap extends LightningElement {
     this.unsubscribeMC();
   }
   handleMessage(message) {
-    console.log("message ", message);
+    this.boatId = message.recordId;
   }
 
   // Creates the map markers array with the current boat's location for the map.
