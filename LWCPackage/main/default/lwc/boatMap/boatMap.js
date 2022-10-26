@@ -1,8 +1,22 @@
 import BOATMC from "@salesforce/messageChannel/BoatMessageChannel__c";
+import { getRecord } from "lightning/uiRecordApi";
+import {
+  subscribe,
+  unsubscribe,
+  APPLICATION_SCOPE,
+  MessageContext
+} from "lightning/messageService";
+import GEO_LONG_FIELD from "@salesforce/schema/Boat__c.Geolocation__Longitude__s";
+import GEO_LAT_FIELD from "@salesforce/schema/Boat__c.Geolocation__Latitude__s";
+import { wire } from "lwc";
 
 // Declare the const LONGITUDE_FIELD for the boat's Longitude__s
 // Declare the const LATITUDE_FIELD for the boat's Latitude
 // Declare the const BOAT_FIELDS as a list of [LONGITUDE_FIELD, LATITUDE_FIELD];
+const LONGITUDE_FIELD = GEO_LONG_FIELD;
+const LATITUDE_FIELD = GEO_LAT_FIELD;
+const BOAT_FIELDS = [LONGITUDE_FIELD, LATITUDE_FIELD];
+
 export default class BoatMap extends LightningElement {
   // private
   subscription = null;
@@ -22,9 +36,12 @@ export default class BoatMap extends LightningElement {
   mapMarkers = [];
 
   // Initialize messageContext for Message Service
+  @wire(MessageContext)
+  messageContext;
 
   // Getting record's location to construct map markers using recordId
   // Wire the getRecord method using ('$boatId')
+  @wire(getRecord, { recordId: "$boatId", fields: BOAT_FIELDS })
   wiredRecord({ error, data }) {
     // Error handling
     if (data) {
@@ -47,11 +64,28 @@ export default class BoatMap extends LightningElement {
       return;
     }
     // Subscribe to the message channel to retrieve the recordId and explicitly assign it to boatId.
+    this.subscription = subscribe(
+      this.messageContext,
+      BOATMC,
+      (message) => this.handleMessage(message),
+      { scope: APPLICATION_SCOPE }
+    );
+  }
+
+  unsubscribeMC() {
+    this.subscription = null;
   }
 
   // Calls subscribeMC()
   connectedCallback() {
     this.subscribeMC();
+  }
+
+  disconnectedCallback() {
+    this.unsubscribeMC();
+  }
+  handleMessage(message) {
+    console.log("message ", message);
   }
 
   // Creates the map markers array with the current boat's location for the map.
