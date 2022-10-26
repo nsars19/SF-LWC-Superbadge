@@ -6,15 +6,13 @@ import {
   APPLICATION_SCOPE,
   MessageContext
 } from "lightning/messageService";
-import GEO_LONG_FIELD from "@salesforce/schema/Boat__c.Geolocation__Longitude__s";
-import GEO_LAT_FIELD from "@salesforce/schema/Boat__c.Geolocation__Latitude__s";
 import { wire } from "lwc";
 
 // Declare the const LONGITUDE_FIELD for the boat's Longitude__s
 // Declare the const LATITUDE_FIELD for the boat's Latitude
 // Declare the const BOAT_FIELDS as a list of [LONGITUDE_FIELD, LATITUDE_FIELD];
-const LONGITUDE_FIELD = GEO_LONG_FIELD;
-const LATITUDE_FIELD = GEO_LAT_FIELD;
+const LONGITUDE_FIELD = "Boat__c.Geolocation__Longitude__s";
+const LATITUDE_FIELD = "Boat__c.Geolocation__Latitude__s";
 const BOAT_FIELDS = [LONGITUDE_FIELD, LATITUDE_FIELD];
 
 export default class BoatMap extends LightningElement {
