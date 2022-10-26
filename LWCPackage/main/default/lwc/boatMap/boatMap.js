@@ -6,7 +6,7 @@ import {
   APPLICATION_SCOPE,
   MessageContext
 } from "lightning/messageService";
-import { wire } from "lwc";
+import { LightningElement, wire } from "lwc";
 
 // Declare the const LONGITUDE_FIELD for the boat's Longitude__s
 // Declare the const LATITUDE_FIELD for the boat's Latitude
