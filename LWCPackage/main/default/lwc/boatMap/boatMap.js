@@ -73,6 +73,7 @@ export default class BoatMap extends LightningElement {
   }
 
   unsubscribeMC() {
+    unsubscribe(this.subscription);
     this.subscription = null;
   }
 
