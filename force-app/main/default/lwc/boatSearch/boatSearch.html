@@ -13,7 +13,7 @@
         </div>
         <p class="slds-var-p-horizontal_small">
           <!-- boatSearchForm component goes here -->
-          <c-boat-search-form onsearch={handleChange}></c-boat-search-form>
+          <c-boat-search-form onsearch={searchBoats}></c-boat-search-form>
         </p>
       </lightning-card>
     </lightning-layout-item>
@@ -35,9 +35,4 @@
       <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
     </lightning-layout-item>
   </lightning-layout>
-  <!-- <lightning-record-form
-    object-api-name={objectApiName}
-    fields={fields}
-    onsuccess={handleSuccess}
-  ></lightning-record-form> -->
 </template>

@@ -40,7 +40,7 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     if (!this.boatId) return;
 
     this.isLoading = true;
-    getAllReviews(this.boatId)
+    getAllReviews({ boatId: this.boatId })
       .then((data) => {
         this.boatReviews = data;
         this.error = undefined;
